@@ -1,7 +1,14 @@
 import sys
 from PySide2 import QtWidgets
+
+import Utils
 from gui.Window import Ui_MainWindow
 from gui.Actions import Actions
+from os.path import exists
+
+# Create default settings file
+if not exists('settings.json'):
+    Utils.defaultSettings()
 
 # Init Qt
 app = QtWidgets.QApplication(sys.argv)
