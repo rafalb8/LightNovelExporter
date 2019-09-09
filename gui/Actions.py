@@ -30,6 +30,12 @@ class Actions:
             for book in books:
                 wdgList.addItem(book)
 
+    def BackToBookList(self):
+        if self.view is not ViewType.BOOKVIEW:
+            self.view = ViewType.BOOKVIEW
+            self.ui.menuNovel.setEnabled(False)
+            self.UpdateList()
+
     # Add novel to list
     def AddNovel(self):
         # Create Resized Input Dialog
@@ -89,6 +95,7 @@ class Actions:
         if self.view is ViewType.BOOKVIEW:
             self.view = ViewType.CHAPTERVIEW
             self.ui.menuNovel.setEnabled(True)
+            self.ui.actShowList.setEnabled(True)
 
             # Insert Chapters
             wdgList = self.ui.wdgList

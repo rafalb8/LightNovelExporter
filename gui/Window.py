@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'MainWindow.ui',
 # licensing of 'MainWindow.ui' applies.
 #
-# Created: Mon Sep  9 12:28:16 2019
+# Created: Mon Sep  9 18:06:03 2019
 #      by: pyside2-uic  running on PySide2 5.13.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -73,6 +73,11 @@ class Ui_MainWindow(object):
         self.actDownload.setObjectName("actDownload")
         self.actGenerate = QtWidgets.QAction(MainWindow)
         self.actGenerate.setObjectName("actGenerate")
+        self.actShowList = QtWidgets.QAction(MainWindow)
+        self.actShowList.setEnabled(False)
+        self.actShowList.setObjectName("actShowList")
+        self.menuList.addAction(self.actShowList)
+        self.menuList.addSeparator()
         self.menuList.addAction(self.actAddNovel)
         self.menuNovel.addAction(self.actDownload)
         self.menuNovel.addAction(self.actGenerate)
@@ -94,4 +99,5 @@ class Ui_MainWindow(object):
         self.actAddNovel.setText(QtWidgets.QApplication.translate("MainWindow", "Add from URL", None, -1))
         self.actDownload.setText(QtWidgets.QApplication.translate("MainWindow", "Download Chapter/s", None, -1))
         self.actGenerate.setText(QtWidgets.QApplication.translate("MainWindow", "Generate ePUB", None, -1))
+        self.actShowList.setText(QtWidgets.QApplication.translate("MainWindow", "Show Book List", None, -1))
 

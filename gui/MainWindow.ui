@@ -157,6 +157,8 @@
     <property name="title">
      <string>Novel List</string>
     </property>
+    <addaction name="actShowList"/>
+    <addaction name="separator"/>
     <addaction name="actAddNovel"/>
    </widget>
    <widget class="QMenu" name="menuNovel">
@@ -188,6 +190,14 @@
   <action name="actGenerate">
    <property name="text">
     <string>Generate ePUB</string>
+   </property>
+  </action>
+  <action name="actShowList">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Show Book List</string>
    </property>
   </action>
  </widget>

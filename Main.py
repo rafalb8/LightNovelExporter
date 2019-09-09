@@ -22,6 +22,7 @@ ui.actAddNovel.triggered.connect(act.AddNovel)
 ui.wdgList.currentItemChanged.connect(act.SelectedBook)
 ui.wdgList.itemActivated.connect(act.EnteredBook)
 ui.actDownload.triggered.connect(act.DownloadAction)
+ui.actShowList.triggered.connect(act.BackToBookList)
 
 # Update List
 act.UpdateList()
