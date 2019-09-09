@@ -98,8 +98,7 @@ def getChapterText(url):
     html = BeautifulSoup(body, 'lxml')
 
     # Get text and format it
-    text = '\n'.join([str(p.string).strip() for p in html.find('div', class_='desc').find_all('p')])
-
+    text = '\n'.join([str(p.string).strip() for p in html.find('div', class_='desc') if p.string is not None])
     return text
 
 
