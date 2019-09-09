@@ -1,0 +1,96 @@
+# -*- coding: utf-8 -*-
+
+# Form implementation generated from reading ui file 'MainWindow.ui',
+# licensing of 'MainWindow.ui' applies.
+#
+# Created: Mon Sep  9 11:30:45 2019
+#      by: pyside2-uic  running on PySide2 5.13.1
+#
+# WARNING! All changes made in this file will be lost!
+
+from PySide2 import QtCore, QtGui, QtWidgets
+
+class Ui_MainWindow(object):
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(930, 728)
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        self.wdgList = QtWidgets.QListWidget(self.centralwidget)
+        self.wdgList.setGeometry(QtCore.QRect(10, 10, 651, 691))
+        self.wdgList.setObjectName("wdgList")
+        self.lblTitle = QtWidgets.QLabel(self.centralwidget)
+        self.lblTitle.setGeometry(QtCore.QRect(670, 370, 251, 71))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.lblTitle.setFont(font)
+        self.lblTitle.setAlignment(QtCore.Qt.AlignCenter)
+        self.lblTitle.setWordWrap(True)
+        self.lblTitle.setObjectName("lblTitle")
+        self.lblType = QtWidgets.QLabel(self.centralwidget)
+        self.lblType.setGeometry(QtCore.QRect(670, 450, 251, 31))
+        font = QtGui.QFont()
+        font.setPointSize(13)
+        self.lblType.setFont(font)
+        self.lblType.setAlignment(QtCore.Qt.AlignCenter)
+        self.lblType.setObjectName("lblType")
+        self.lblLanguage = QtWidgets.QLabel(self.centralwidget)
+        self.lblLanguage.setGeometry(QtCore.QRect(670, 500, 251, 31))
+        font = QtGui.QFont()
+        font.setPointSize(13)
+        self.lblLanguage.setFont(font)
+        self.lblLanguage.setAlignment(QtCore.Qt.AlignCenter)
+        self.lblLanguage.setObjectName("lblLanguage")
+        self.lblGenres = QtWidgets.QLabel(self.centralwidget)
+        self.lblGenres.setGeometry(QtCore.QRect(670, 550, 251, 151))
+        font = QtGui.QFont()
+        font.setPointSize(13)
+        self.lblGenres.setFont(font)
+        self.lblGenres.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
+        self.lblGenres.setWordWrap(True)
+        self.lblGenres.setObjectName("lblGenres")
+        self.imgCover = QtWidgets.QLabel(self.centralwidget)
+        self.imgCover.setGeometry(QtCore.QRect(670, 10, 251, 331))
+        self.imgCover.setAutoFillBackground(True)
+        self.imgCover.setText("")
+        self.imgCover.setScaledContents(True)
+        self.imgCover.setMargin(0)
+        self.imgCover.setObjectName("imgCover")
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 930, 20))
+        self.menubar.setObjectName("menubar")
+        self.menuList = QtWidgets.QMenu(self.menubar)
+        self.menuList.setObjectName("menuList")
+        self.menuNovel = QtWidgets.QMenu(self.menubar)
+        self.menuNovel.setEnabled(False)
+        self.menuNovel.setObjectName("menuNovel")
+        MainWindow.setMenuBar(self.menubar)
+        self.actAddNovel = QtWidgets.QAction(MainWindow)
+        self.actAddNovel.setObjectName("actAddNovel")
+        self.actDownload = QtWidgets.QAction(MainWindow)
+        self.actDownload.setEnabled(True)
+        self.actDownload.setObjectName("actDownload")
+        self.actGenerate = QtWidgets.QAction(MainWindow)
+        self.actGenerate.setObjectName("actGenerate")
+        self.menuList.addAction(self.actAddNovel)
+        self.menuNovel.addAction(self.actDownload)
+        self.menuNovel.addAction(self.actGenerate)
+        self.menubar.addAction(self.menuList.menuAction())
+        self.menubar.addAction(self.menuNovel.menuAction())
+
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def retranslateUi(self, MainWindow):
+        MainWindow.setWindowTitle(QtWidgets.QApplication.translate("MainWindow", "Light Novel Exporter", None, -1))
+        self.lblTitle.setText(QtWidgets.QApplication.translate("MainWindow", "Title", None, -1))
+        self.lblType.setText(QtWidgets.QApplication.translate("MainWindow", "Type", None, -1))
+        self.lblLanguage.setText(QtWidgets.QApplication.translate("MainWindow", "Language", None, -1))
+        self.lblGenres.setText(QtWidgets.QApplication.translate("MainWindow", "Genres", None, -1))
+        self.menuList.setTitle(QtWidgets.QApplication.translate("MainWindow", "Novel List", None, -1))
+        self.menuNovel.setTitle(QtWidgets.QApplication.translate("MainWindow", "Novel", None, -1))
+        self.actAddNovel.setText(QtWidgets.QApplication.translate("MainWindow", "Add from URL", None, -1))
+        self.actDownload.setText(QtWidgets.QApplication.translate("MainWindow", "Download Chapter/s", None, -1))
+        self.actGenerate.setText(QtWidgets.QApplication.translate("MainWindow", "Generate ePUB", None, -1))
+
