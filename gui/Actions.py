@@ -161,14 +161,15 @@ class Actions:
         # Generate Title for book
         volume = chapters[0]['volume']
         for chapter in chapters:
-            if chapter['volume'] != volume:
+            if chapter['volume'] != volume or 'chapters' in volume.lower():
                 volume = 'Chapters:'
 
         title = self.info['title'] + ' ' + volume
 
         # If chapters are not from the same volume
         if volume == 'Chapters:':
-            numbers = [int(''.join(s for s in name if s.isdigit())) for name in selected]
+            numbers = [int(float(''.join(s for s in name if s.isdigit() or s == '.'))) for name in selected]
+            numbers = list(set(numbers))
             numbers.sort()
 
             # Generate ranges for number list
