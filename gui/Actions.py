@@ -115,6 +115,17 @@ class Actions:
         elif self.view is ViewType.CHAPTERVIEW:
             pass
 
+    # Find and download chapters
+    def downloadChapters(self, chapters):
+        chp = self.info['chapters']
+
+        # Get indexes from Info dictionary
+        idx = [i for i in range(len(chp)) for name in chapters if name == chp[i]['name']]
+
+        # Dump chapters
+        for i in idx:
+            Utils.dumpChapterText(self.info, i, self.settings)
+
     # Download selected chapters
     def DownloadAction(self):
         wdgList = self.ui.wdgList
@@ -122,13 +133,10 @@ class Actions:
         # Get Selected List
         selected = [item.text().split(' | ')[1] for item in wdgList.selectedItems() if item.text().split(' | ')[1][-1] is not ']']
 
-        # Get indexes from Info dictionary
-        chp = self.info['chapters']
-        chapters = [i for i in range(len(chp)) for name in selected if name == chp[i]['name']]
+        # Download chapters
+        self.downloadChapters(selected)
 
-        for i in range(len(chapters)):
-            Utils.dumpChapterText(self.info, chapters[i], self.settings)
-
+        # Refresh list
         self.UpdateList()
 
     # Generate ePUB from selected chapters
@@ -136,7 +144,16 @@ class Actions:
         wdgList = self.ui.wdgList
 
         # Get Selected List
-        selected = [item.text().split(' | ')[1][:-1] for item in wdgList.selectedItems()]
+        selected = [item.text().split(' | ')[1] for item in wdgList.selectedItems()]
+
+        # Dump not downloaded chapters
+        notDumped = [x for x in selected if x[-1] != ']']
+        self.downloadChapters(notDumped)
+        self.UpdateList()
+
+        # Update selected list
+        selected = [x[:-1] for x in selected if x[-1] == ']']
+        selected += notDumped
 
         # Get dicts from Info dictionary
         chapters = [chp for chp in self.info['chapters'] for name in selected if name == chp['name']]
