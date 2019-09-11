@@ -1,5 +1,5 @@
 from PySide2.QtGui import QPixmap
-from PySide2.QtWidgets import QInputDialog, QListWidgetItem, QAbstractItemView
+from PySide2.QtWidgets import QInputDialog, QListWidgetItem, QAbstractItemView, QFileDialog
 import Utils
 from gui.Window import Ui_MainWindow
 from os import walk
@@ -24,11 +24,20 @@ class Actions:
     # Refresh book list
     def UpdateList(self):
         wdgList = self.ui.wdgList
-
         wdgList.clear()
-        for root, books, files in walk(self.settings['BooksDirectory']):
-            for book in books:
-                wdgList.addItem(book)
+
+        if self.view is ViewType.BOOKVIEW:
+            for root, books, files in walk(self.settings['BooksDirectory']):
+                for book in books:
+                    wdgList.addItem(book)
+        elif self.view is ViewType.CHAPTERVIEW:
+            for chapter in self.info['chapters']:
+                name = '{0} | {1}'.format(chapter['volume'], chapter['name'])
+                path = self.settings['BooksDirectory']+self.info['title']+'/'+chapter['name']+'.txt'
+                if exists(path):
+                    wdgList.addItem('[{0}]'.format(name))
+                else:
+                    wdgList.addItem(name)
 
     def BackToBookList(self):
         if self.view is not ViewType.BOOKVIEW:
@@ -98,16 +107,7 @@ class Actions:
             self.ui.actShowList.setEnabled(True)
 
             # Insert Chapters
-            wdgList = self.ui.wdgList
-            wdgList.clear()
-
-            for chapter in self.info['chapters']:
-                name = chapter['volume'] + ' | ' + chapter['name']
-                path = self.settings['BooksDirectory']+self.info['title']+'/'+chapter['name']+'.txt'
-                if exists(path):
-                    wdgList.addItem('[{0}]'.format(name))
-                else:
-                    wdgList.addItem(name)
+            self.UpdateList()
 
             # Change Selection Mode
             self.ui.wdgList.setSelectionMode(QAbstractItemView.ExtendedSelection)
@@ -120,7 +120,7 @@ class Actions:
         wdgList = self.ui.wdgList
 
         # Get Selected List
-        selected = [item.text().split(' | ')[1] for item in wdgList.selectedItems()]
+        selected = [item.text().split(' | ')[1] for item in wdgList.selectedItems() if item.text().split(' | ')[1][-1] is not ']']
 
         # Get indexes from Info dictionary
         chp = self.info['chapters']
@@ -128,5 +128,67 @@ class Actions:
 
         for i in range(len(chapters)):
             Utils.dumpChapterText(self.info, chapters[i], self.settings)
-            wdgList.selectedItems()[i].setText('[{0}]'.format(wdgList.selectedItems()[i].text()))
+
+        self.UpdateList()
+
+    # Generate ePUB from selected chapters
+    def GenerateBook(self):
+        wdgList = self.ui.wdgList
+
+        # Get Selected List
+        selected = [item.text().split(' | ')[1][:-1] for item in wdgList.selectedItems()]
+
+        # Get dicts from Info dictionary
+        chapters = [chp for chp in self.info['chapters'] for name in selected if name == chp['name']]
+
+        # Generate Title for book
+        volume = chapters[0]['volume']
+        for chapter in chapters:
+            if chapter['volume'] != volume:
+                volume = 'Chapters:'
+
+        title = self.info['title'] + ' ' + volume
+
+        # If chapters are not from the same volume
+        if volume == 'Chapters:':
+            numbers = [int(''.join(s for s in name if s.isdigit())) for name in selected]
+            numbers.sort()
+
+            # Generate ranges for number list
+            ranges = Utils.ranges(numbers)
+
+            for r in ranges:
+                if r[0] == r[1]:
+                    title += ' {0},'.format(r[0])
+                else:
+                    title += ' {0}-{1},'.format(r[0], r[1])
+
+            if title[-1] == ',':
+                title = title[:-1]
+
+        # Show Title Input Dialog
+        dlg = QInputDialog()
+        dlg.setInputMode(QInputDialog.TextInput)
+        dlg.setLabelText('Enter Title:')
+        dlg.setWindowTitle('Select Book Title')
+        dlg.setTextValue(title)
+        dlg.resize(500, 100)
+
+        # If Cancelled
+        if dlg.exec_() is 0:
+            return
+
+        # Get URL
+        title = dlg.textValue()
+
+        # Show File Dialog
+        ans = QFileDialog.getSaveFileName(caption='Save ePUB', filter='ePUB (*.epub)')
+        filename = ans[0]
+
+        # Add file format if not present
+        if filename[-5:] != '.epub':
+            filename += '.epub'
+
+        # Generate ePUB file
+        Utils.generateEPUB(filename, title, self.info, chapters, self.settings)
 

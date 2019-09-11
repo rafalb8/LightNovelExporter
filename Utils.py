@@ -6,6 +6,23 @@ from unidecode import unidecode
 import json
 
 
+# Function that generates ranges list
+def ranges(numbers):
+    out = []
+    end = -2
+    start = -1
+
+    for item in numbers:
+        if item != end + 1:
+            if start != -1:
+                out.append((start, end))
+            start = item
+        end = item
+
+    out.append((start, end))
+
+    return out
+
 # Save Settings
 def saveSettings(settings):
     json.dump(settings, open('settings.json', 'w'), indent=4)
