@@ -27,10 +27,16 @@ class Actions:
         wdgList.clear()
 
         if self.view is ViewType.BOOKVIEW:
+            # Change Selection Mode
+            self.ui.wdgList.setSelectionMode(QAbstractItemView.SingleSelection)
+
             for root, books, files in walk(self.settings['BooksDirectory']):
                 for book in books:
                     wdgList.addItem(book)
         elif self.view is ViewType.CHAPTERVIEW:
+            # Change Selection Mode
+            self.ui.wdgList.setSelectionMode(QAbstractItemView.ExtendedSelection)
+
             for chapter in self.info['chapters']:
                 name = '{0} | {1}'.format(chapter['volume'], chapter['name'])
                 path = self.settings['BooksDirectory']+self.info['title']+'/'+chapter['name']+'.txt'
@@ -108,9 +114,6 @@ class Actions:
 
             # Insert Chapters
             self.UpdateList()
-
-            # Change Selection Mode
-            self.ui.wdgList.setSelectionMode(QAbstractItemView.ExtendedSelection)
 
         elif self.view is ViewType.CHAPTERVIEW:
             pass
