@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'MainWindow.ui',
 # licensing of 'MainWindow.ui' applies.
 #
-# Created: Mon Sep  9 18:06:03 2019
+# Created: Thu Sep 12 12:25:32 2019
 #      by: pyside2-uic  running on PySide2 5.13.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -18,6 +18,7 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName("centralwidget")
         self.wdgList = QtWidgets.QListWidget(self.centralwidget)
         self.wdgList.setGeometry(QtCore.QRect(10, 10, 651, 691))
+        self.wdgList.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.wdgList.setObjectName("wdgList")
         self.lblTitle = QtWidgets.QLabel(self.centralwidget)
         self.lblTitle.setGeometry(QtCore.QRect(670, 370, 251, 71))

@@ -93,11 +93,12 @@ class Actions:
 
         self.UpdateList()
 
-    # Show Book info
-    def SelectedBook(self, item):
+    # List item selection event
+    def ListSelect(self, item):
         if not isinstance(item, QListWidgetItem):
             return
 
+        # Show Book info
         if self.view is ViewType.BOOKVIEW:
             # Get Info
             self.info = Utils.loadInfo(item.text(), self.settings)
@@ -111,8 +112,8 @@ class Actions:
             self.ui.lblLanguage.setText(self.info['language'])
             self.ui.lblGenres.setText(', '.join(self.info['genres']))
 
-    # Show Book Chapters
-    def EnteredBook(self, item):
+    # List click event
+    def ListClick(self, item):
         if not isinstance(item, QListWidgetItem):
             return
 
@@ -121,6 +122,13 @@ class Actions:
 
         # Insert Chapters
         self.UpdateList()
+
+    # Right click menu for list
+    def ContextMenu(self, point):
+        if self.view is ViewType.BOOKVIEW:
+            self.ui.menuList.exec_(self.ui.wdgList.mapToGlobal(point))
+        elif self.view is ViewType.CHAPTERVIEW:
+            self.ui.menuNovel.exec_(self.ui.wdgList.mapToGlobal(point))
 
     # Find and download chapters
     def downloadChapters(self, chapters):
