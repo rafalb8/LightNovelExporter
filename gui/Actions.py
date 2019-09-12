@@ -30,13 +30,24 @@ class Actions:
             # Change Selection Mode
             self.ui.wdgList.setSelectionMode(QAbstractItemView.SingleSelection)
 
+            # Enable menus
+            self.ui.menuNovel.setEnabled(False)
+            self.ui.actShowList.setEnabled(False)
+
+            # Add books to the list
             for root, books, files in walk(self.settings['BooksDirectory']):
                 for book in books:
                     wdgList.addItem(book)
+
         elif self.view is ViewType.CHAPTERVIEW:
             # Change Selection Mode
             self.ui.wdgList.setSelectionMode(QAbstractItemView.ExtendedSelection)
 
+            # Enable menus
+            self.ui.menuNovel.setEnabled(True)
+            self.ui.actShowList.setEnabled(True)
+
+            # Add chapters to the list
             for chapter in self.info['chapters']:
                 name = '{0} | {1}'.format(chapter['volume'], chapter['name'])
                 path = self.settings['BooksDirectory']+self.info['title']+'/'+chapter['name']+'.txt'
@@ -46,10 +57,8 @@ class Actions:
                     wdgList.addItem(name)
 
     def BackToBookList(self):
-        if self.view is not ViewType.BOOKVIEW:
-            self.view = ViewType.BOOKVIEW
-            self.ui.menuNovel.setEnabled(False)
-            self.UpdateList()
+        self.view = ViewType.BOOKVIEW
+        self.UpdateList()
 
     # Add novel to list
     def AddNovel(self):
@@ -109,14 +118,9 @@ class Actions:
 
         if self.view is ViewType.BOOKVIEW:
             self.view = ViewType.CHAPTERVIEW
-            self.ui.menuNovel.setEnabled(True)
-            self.ui.actShowList.setEnabled(True)
 
-            # Insert Chapters
-            self.UpdateList()
-
-        elif self.view is ViewType.CHAPTERVIEW:
-            pass
+        # Insert Chapters
+        self.UpdateList()
 
     # Find and download chapters
     def downloadChapters(self, chapters):
