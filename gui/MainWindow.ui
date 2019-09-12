@@ -105,7 +105,7 @@
       <x>670</x>
       <y>550</y>
       <width>251</width>
-      <height>151</height>
+      <height>111</height>
      </rect>
     </property>
     <property name="font">
@@ -146,6 +146,22 @@
      <number>0</number>
     </property>
    </widget>
+   <widget class="QPushButton" name="btnShowList">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>760</x>
+      <y>670</y>
+      <width>80</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Back</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -156,13 +172,12 @@
      <height>20</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuList">
+   <widget class="QMenu" name="menuBooks">
     <property name="title">
      <string>Novel List</string>
     </property>
-    <addaction name="actShowList"/>
-    <addaction name="separator"/>
-    <addaction name="actAddNovel"/>
+    <addaction name="actAddBook"/>
+    <addaction name="actRemoveBook"/>
    </widget>
    <widget class="QMenu" name="menuNovel">
     <property name="enabled">
@@ -174,10 +189,10 @@
     <addaction name="actDownload"/>
     <addaction name="actGenerate"/>
    </widget>
-   <addaction name="menuList"/>
+   <addaction name="menuBooks"/>
    <addaction name="menuNovel"/>
   </widget>
-  <action name="actAddNovel">
+  <action name="actAddBook">
    <property name="text">
     <string>Add from URL</string>
    </property>
@@ -195,12 +210,12 @@
     <string>Generate ePUB</string>
    </property>
   </action>
-  <action name="actShowList">
+  <action name="actRemoveBook">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="text">
-    <string>Show Book List</string>
+    <string>Remove Book</string>
    </property>
   </action>
  </widget>

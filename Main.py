@@ -18,13 +18,22 @@ ui.setupUi(MainWindow)
 
 # Connect actions to signals
 act = Actions(ui)
-ui.actAddNovel.triggered.connect(act.AddNovel)
+
+# Menu Book list
+ui.actAddBook.triggered.connect(act.AddBook)
+ui.actRemoveBook.triggered.connect(act.RemoveBook)
+
+# Menu Chapter list
+ui.actDownload.triggered.connect(act.DownloadAction)
+ui.actGenerate.triggered.connect(act.GenerateBook)
+
+# Widget List actions
 ui.wdgList.currentItemChanged.connect(act.ListSelect)
 ui.wdgList.itemActivated.connect(act.ListClick)
 ui.wdgList.customContextMenuRequested.connect(act.ContextMenu)
-ui.actDownload.triggered.connect(act.DownloadAction)
-ui.actShowList.triggered.connect(act.BackToBookList)
-ui.actGenerate.triggered.connect(act.GenerateBook)
+
+# Back button
+ui.btnShowList.clicked.connect(act.BackToBookList)
 
 # Update List
 act.UpdateList()

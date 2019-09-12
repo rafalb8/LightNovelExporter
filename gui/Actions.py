@@ -4,6 +4,7 @@ import Utils
 from gui.Window import Ui_MainWindow
 from os import walk
 from os.path import exists
+from shutil import rmtree
 
 
 class ViewType:
@@ -30,9 +31,10 @@ class Actions:
             # Change Selection Mode
             self.ui.wdgList.setSelectionMode(QAbstractItemView.SingleSelection)
 
-            # Enable menus
+            # Enable/ Disable menus
             self.ui.menuNovel.setEnabled(False)
-            self.ui.actShowList.setEnabled(False)
+            self.ui.btnShowList.setEnabled(False)
+            self.ui.menuBooks.setEnabled(True)
 
             # Add books to the list
             for root, books, files in walk(self.settings['BooksDirectory']):
@@ -43,9 +45,10 @@ class Actions:
             # Change Selection Mode
             self.ui.wdgList.setSelectionMode(QAbstractItemView.ExtendedSelection)
 
-            # Enable menus
+            # Enable/ Disable menus
             self.ui.menuNovel.setEnabled(True)
-            self.ui.actShowList.setEnabled(True)
+            self.ui.btnShowList.setEnabled(True)
+            self.ui.menuBooks.setEnabled(False)
 
             # Add chapters to the list
             for chapter in self.info['chapters']:
@@ -61,7 +64,7 @@ class Actions:
         self.UpdateList()
 
     # Add novel to list
-    def AddNovel(self):
+    def AddBook(self):
         # Create Resized Input Dialog
         dlg = QInputDialog()
         dlg.setInputMode(QInputDialog.TextInput)
@@ -91,6 +94,15 @@ class Actions:
         # Dump Cover
         Utils.dumpCover(info, self.settings)
 
+        self.UpdateList()
+
+    # Remove novel
+    def RemoveBook(self):
+        # Get Selected item
+        selected = self.ui.wdgList.selectedItems()[0].text()
+        book = self.settings['BooksDirectory']+selected
+
+        rmtree(book, ignore_errors=True)
         self.UpdateList()
 
     # List item selection event
@@ -126,7 +138,7 @@ class Actions:
     # Right click menu for list
     def ContextMenu(self, point):
         if self.view is ViewType.BOOKVIEW:
-            self.ui.menuList.exec_(self.ui.wdgList.mapToGlobal(point))
+            self.ui.menuBooks.exec_(self.ui.wdgList.mapToGlobal(point))
         elif self.view is ViewType.CHAPTERVIEW:
             self.ui.menuNovel.exec_(self.ui.wdgList.mapToGlobal(point))
 
