@@ -1,7 +1,7 @@
 import faster_than_requests as requests
 from bs4 import BeautifulSoup
 from ebooklib import epub
-from os import makedirs
+from os import makedirs, path
 from unidecode import unidecode
 import json
 
@@ -23,6 +23,7 @@ def ranges(numbers):
 
     return out
 
+
 # Save Settings
 def saveSettings(settings):
     json.dump(settings, open('settings.json', 'w'), indent=4)
@@ -35,7 +36,7 @@ def loadSettings():
 
 # Save json with default settings
 def defaultSettings():
-    settings = {'BooksDirectory': 'books/', 'MainURL': 'readlightnovel.org'}
+    settings = {'BooksDirectory': 'books', 'MainURL': 'readlightnovel.org'}
     saveSettings(settings)
 
 
@@ -92,21 +93,21 @@ def getInfo(url):
 # Save information to JSON file
 def dumpInfo(url, settings):
     info = getInfo(url)
-    booksDir = settings['BooksDirectory']
+    bookDir = path.join(settings['BooksDirectory'], info['title'])
 
     try:
-        makedirs(booksDir+info['title'])
+        makedirs(bookDir)
     except OSError:
         pass
 
-    json.dump(info, open(booksDir + info['title'] + '/info.json', 'w'), indent=4)
+    json.dump(info, open(path.join(bookDir, 'info.json'), 'w'), indent=4)
     return info
 
 
 # Read JSON file
 def loadInfo(title, settings):
-    booksDir = settings['BooksDirectory']
-    return json.load(open(booksDir + title + '/info.json', 'r'))
+    info = path.join(settings['BooksDirectory'], title, 'info.json')
+    return json.load(open(info, 'r'))
 
 
 def getChapterText(url):
@@ -121,33 +122,33 @@ def getChapterText(url):
 
 # Save Chapter text
 def dumpChapterText(info, idx, settings):
-    booksDir = settings['BooksDirectory']
+    bookDir = path.join(settings['BooksDirectory'], info['title'])
     try:
-        makedirs(booksDir + info['title'])
+        makedirs(bookDir)
     except OSError:
         pass
 
-    with open(booksDir + info['title'] + '/' + info['chapters'][idx]['name']+'.txt', 'w') as f:
+    with open(path.join(bookDir, info['chapters'][idx]['name']+'.txt'), 'w') as f:
         f.write(getChapterText(info['chapters'][idx]['url']))
 
 
 # Save cover
 def dumpCover(info, settings):
-    booksDir = settings['BooksDirectory']
+    bookDir = path.join(settings['BooksDirectory'], info['title'])
 
     try:
-        makedirs(booksDir + info['title'])
+        makedirs(bookDir)
     except OSError:
         pass
 
-    requests.downloads(info['img'], booksDir + info['title']+'/cover.jpg')
+    requests.downloads(info['img'], path.join(bookDir, 'cover.jpg'))
 
 
 # Generate ePUB
 def generateEPUB(filename, title, info, chapters, settings):
     # Create empty ePUB file
     book = epub.EpubBook()
-    booksDir = settings['BooksDirectory']
+    bookDir = path.join(settings['BooksDirectory'], info['title'])
 
     # Metadata
     book.set_title(title)
@@ -155,7 +156,7 @@ def generateEPUB(filename, title, info, chapters, settings):
     book.add_author(info['author'])
 
     # Cover
-    book.set_cover('cover.jpg', open(booksDir + info['title'] + '/cover.jpg', 'rb').read())
+    book.set_cover('cover.jpg', open(path.join(bookDir, 'cover.jpg'), 'rb').read())
 
     # Empty Table of contents
     toc = {}
@@ -165,7 +166,7 @@ def generateEPUB(filename, title, info, chapters, settings):
         # Create chapter
         newChapter = epub.EpubHtml(title=chp['name'], file_name=chp['name'] + '.xhtml', lang='en')
         newChapter.content = u'<h1 align="center">' + chp['name'] + '\n</h1>' + \
-                             (open(booksDir + info['title']+'/'+chp['name']+'.txt', 'r').read())
+                             (open(path.join(bookDir, chp['name']+'.txt'), 'r').read())
 
         # Add to book
         book.add_item(newChapter)

@@ -2,8 +2,7 @@ from PySide2.QtGui import QPixmap
 from PySide2.QtWidgets import QInputDialog, QListWidgetItem, QAbstractItemView, QFileDialog
 import Utils
 from gui.Window import Ui_MainWindow
-from os import walk
-from os.path import exists
+from os import walk, path
 from shutil import rmtree
 
 
@@ -53,8 +52,8 @@ class Actions:
             # Add chapters to the list
             for chapter in self.info['chapters']:
                 name = '{0} | {1}'.format(chapter['volume'], chapter['name'])
-                path = self.settings['BooksDirectory']+self.info['title']+'/'+chapter['name']+'.txt'
-                if exists(path):
+                file = path.join(self.settings['BooksDirectory'], self.info['title'], chapter['name']+'.txt')
+                if path.exists(file):
                     wdgList.addItem('[{0}]'.format(name))
                 else:
                     wdgList.addItem(name)
@@ -100,7 +99,7 @@ class Actions:
     def RemoveBook(self):
         # Get Selected item
         selected = self.ui.wdgList.selectedItems()[0].text()
-        book = self.settings['BooksDirectory']+selected
+        book = path.join(self.settings['BooksDirectory'], selected)
 
         rmtree(book, ignore_errors=True)
         self.UpdateList()
@@ -116,7 +115,8 @@ class Actions:
             self.info = Utils.loadInfo(item.text(), self.settings)
 
             # Show Cover
-            self.ui.imgCover.setPixmap(QPixmap.fromImage(self.settings['BooksDirectory'] + self.info['title'] + '/cover.jpg'))
+            img = path.join(self.settings['BooksDirectory'], self.info['title'], 'cover.jpg')
+            self.ui.imgCover.setPixmap(QPixmap.fromImage(img))
 
             # Show Info
             self.ui.lblTitle.setText(self.info['title'])
