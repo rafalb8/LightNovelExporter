@@ -7,21 +7,19 @@ import json
 
 
 # Function that generates ranges list
-def ranges(numbers):
-    out = []
-    end = -2
-    start = -1
+# https://stackoverflow.com/a/43884649
+def ranges(ints):
+    ints = sorted(set(ints))
+    start = prev = ints[0]
 
-    for item in numbers:
-        if item != end + 1:
-            if start != -1:
-                out.append((start, end))
-            start = item
-        end = item
+    for number in ints[1:]:
+        if number == prev + 1:
+            prev = number
+        else:
+            yield start, prev
+            start = prev = number
 
-    out.append((start, end))
-
-    return out
+    yield start, prev
 
 
 # Save Settings

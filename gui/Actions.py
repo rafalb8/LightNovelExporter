@@ -197,7 +197,6 @@ class Actions:
         if volume == 'Chapters:':
             numbers = [int(float(''.join(s for s in name if s.isdigit() or s == '.' or s == '-'))) for name in selected]
             numbers = list(set(numbers))
-            numbers.sort()
 
             # Generate ranges for number list
             ranges = Utils.ranges(numbers)
