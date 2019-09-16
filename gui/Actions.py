@@ -52,7 +52,7 @@ class Actions:
             # Add chapters to the list
             for chapter in self.info['chapters']:
                 name = '{0} | {1}'.format(chapter['volume'], chapter['name'])
-                file = path.join(self.settings['BooksDirectory'], self.info['title'], chapter['name']+'.txt')
+                file = path.join(self.settings['BooksDirectory'], self.info['title'], chapter['name']+'.html')
                 if path.exists(file):
                     wdgList.addItem('[{0}]'.format(name))
                 else:

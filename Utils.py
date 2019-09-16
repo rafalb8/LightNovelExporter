@@ -115,9 +115,20 @@ def getChapterText(url):
     body = requests.get2str(url)
     html = BeautifulSoup(body, 'lxml')
 
-    # Get text and format it
-    text = '\n'.join([str(p.string).strip() for p in html.find('div', class_='desc') if p.string is not None])
-    return text
+    # Get text
+    text = html.find('div', class_='desc')
+
+    # Remove unwanted tags
+    for script in text('script'):
+        script.decompose()
+
+    [x.decompose() for x in text('div', class_='hidden')]
+
+    # Remove formatting
+    for attr in ['class', 'style', 'data-size']:
+        del text[attr]
+
+    return str(text)
 
 
 # Save Chapter text
@@ -128,7 +139,7 @@ def dumpChapterText(info, idx, settings):
     except OSError:
         pass
 
-    with open(path.join(bookDir, info['chapters'][idx]['name']+'.txt'), 'w') as f:
+    with open(path.join(bookDir, info['chapters'][idx]['name']+'.html'), 'w') as f:
         f.write(getChapterText(info['chapters'][idx]['url']))
 
 
@@ -165,8 +176,7 @@ def generateEPUB(filename, title, info, chapters, settings):
     for chp in chapters:
         # Create chapter
         newChapter = epub.EpubHtml(title=chp['name'], file_name=chp['name'] + '.xhtml', lang='en')
-        newChapter.content = u'<h1 align="center">' + chp['name'] + '\n</h1>' + \
-                             (open(path.join(bookDir, chp['name']+'.txt'), 'r').read())
+        newChapter.content = open(path.join(bookDir, chp['name']+'.html'), 'r').read()
 
         # Add to book
         book.add_item(newChapter)
