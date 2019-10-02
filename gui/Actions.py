@@ -68,6 +68,7 @@ class Actions:
         dlg = QInputDialog()
         dlg.setInputMode(QInputDialog.TextInput)
         dlg.setLabelText('Enter URL:')
+        dlg.setTextValue('https://www.readlightnovel.org/only-i-level-up')
         dlg.setWindowTitle('Add Novel')
         dlg.resize(500, 100)
 

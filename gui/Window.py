@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'MainWindow.ui',
 # licensing of 'MainWindow.ui' applies.
 #
-# Created: Thu Sep 12 12:42:39 2019
+# Created: Wed Oct  2 19:11:17 2019
 #      by: pyside2-uic  running on PySide2 5.13.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -25,6 +25,7 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(14)
         self.lblTitle.setFont(font)
+        self.lblTitle.setText("")
         self.lblTitle.setAlignment(QtCore.Qt.AlignCenter)
         self.lblTitle.setWordWrap(True)
         self.lblTitle.setObjectName("lblTitle")
@@ -33,6 +34,7 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(13)
         self.lblType.setFont(font)
+        self.lblType.setText("")
         self.lblType.setAlignment(QtCore.Qt.AlignCenter)
         self.lblType.setObjectName("lblType")
         self.lblLanguage = QtWidgets.QLabel(self.centralwidget)
@@ -40,6 +42,7 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(13)
         self.lblLanguage.setFont(font)
+        self.lblLanguage.setText("")
         self.lblLanguage.setAlignment(QtCore.Qt.AlignCenter)
         self.lblLanguage.setObjectName("lblLanguage")
         self.lblGenres = QtWidgets.QLabel(self.centralwidget)
@@ -47,6 +50,7 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(13)
         self.lblGenres.setFont(font)
+        self.lblGenres.setText("")
         self.lblGenres.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
         self.lblGenres.setWordWrap(True)
         self.lblGenres.setObjectName("lblGenres")
@@ -63,7 +67,7 @@ class Ui_MainWindow(object):
         self.btnShowList.setObjectName("btnShowList")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 930, 20))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 930, 30))
         self.menubar.setObjectName("menubar")
         self.menuBooks = QtWidgets.QMenu(self.menubar)
         self.menuBooks.setObjectName("menuBooks")
@@ -94,10 +98,6 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QtWidgets.QApplication.translate("MainWindow", "Light Novel Exporter", None, -1))
-        self.lblTitle.setText(QtWidgets.QApplication.translate("MainWindow", "Title", None, -1))
-        self.lblType.setText(QtWidgets.QApplication.translate("MainWindow", "Type", None, -1))
-        self.lblLanguage.setText(QtWidgets.QApplication.translate("MainWindow", "Language", None, -1))
-        self.lblGenres.setText(QtWidgets.QApplication.translate("MainWindow", "Genres", None, -1))
         self.btnShowList.setText(QtWidgets.QApplication.translate("MainWindow", "Back", None, -1))
         self.menuBooks.setTitle(QtWidgets.QApplication.translate("MainWindow", "Novel List", None, -1))
         self.menuNovel.setTitle(QtWidgets.QApplication.translate("MainWindow", "Novel", None, -1))

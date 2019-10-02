@@ -46,7 +46,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Title</string>
+     <string/>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -71,7 +71,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Type</string>
+     <string/>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -93,7 +93,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Language</string>
+     <string/>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -115,7 +115,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Genres</string>
+     <string/>
     </property>
     <property name="alignment">
      <set>Qt::AlignHCenter|Qt::AlignTop</set>
@@ -169,7 +169,7 @@
      <x>0</x>
      <y>0</y>
      <width>930</width>
-     <height>20</height>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuBooks">
