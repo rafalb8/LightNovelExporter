@@ -52,7 +52,7 @@ class Actions:
             # Add chapters to the list
             for chapter in self.info['chapters']:
                 name = '{0} | {1}'.format(chapter['volume'], chapter['name'])
-                file = path.join(self.settings['BooksDirectory'], self.info['title'], chapter['name']+'.html')
+                file = path.join(self.settings['BooksDirectory'], self.info['title'], '{0}.{1}.html'.format(chapter['volume'], chapter['name']))
                 if path.exists(file):
                     wdgList.addItem('[{0}]'.format(name))
                 else:
@@ -148,7 +148,7 @@ class Actions:
         chp = self.info['chapters']
 
         # Get indexes from Info dictionary
-        idx = [i for i in range(len(chp)) for name in chapters if name == chp[i]['name']]
+        idx = [i for i in range(len(chp)) for volume, name in chapters if name == chp[i]['name'] and volume == chp[i]['volume']]
 
         # Dump chapters
         for i in idx:
@@ -159,7 +159,7 @@ class Actions:
         wdgList = self.ui.wdgList
 
         # Get Selected List
-        selected = [item.text().split(' | ')[1] for item in wdgList.selectedItems() if item.text().split(' | ')[1][-1] is not ']']
+        selected = [item.text().split(' | ') for item in wdgList.selectedItems() if item.text().split(' | ')[1][-1] is not ']']
 
         # Download chapters
         self.downloadChapters(selected)
@@ -172,19 +172,19 @@ class Actions:
         wdgList = self.ui.wdgList
 
         # Get Selected List
-        selected = [item.text().split(' | ')[1] for item in wdgList.selectedItems()]
+        selected = [item.text().split(' | ') for item in wdgList.selectedItems()]
 
         # Dump not downloaded chapters
-        notDumped = [x for x in selected if x[-1] != ']']
+        notDumped = [x for x in selected if x[1][-1] != ']']
         self.downloadChapters(notDumped)
         self.UpdateList()
 
         # Update selected list
-        selected = [x[:-1] for x in selected if x[-1] == ']']
+        selected = [[x[0][1:], x[1][:-1]] for x in selected if x[1][-1] == ']']
         selected += notDumped
 
         # Get dicts from Info dictionary
-        chapters = [chp for chp in self.info['chapters'] for name in selected if name == chp['name']]
+        chapters = [chp for chp in self.info['chapters'] for volume, name in selected if name == chp['name'] and volume == chp['volume']]
 
         # Generate Title for book
         volume = chapters[0]['volume']

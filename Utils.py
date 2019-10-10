@@ -138,7 +138,9 @@ def dumpChapterText(info, idx, settings):
     except OSError:
         pass
 
-    with open(path.join(bookDir, info['chapters'][idx]['name']+'.html'), 'w') as f:
+    chapter = info['chapters'][idx]
+
+    with open(path.join(bookDir, '{0}.{1}.html'.format(chapter['volume'], chapter['name'])), 'w') as f:
         f.write(getChapterText(info['chapters'][idx]['url']))
 
 
@@ -175,7 +177,7 @@ def generateEPUB(filename, title, info, chapters, settings):
     for chp in chapters:
         # Create chapter
         newChapter = epub.EpubHtml(title=chp['name'], file_name=chp['name'] + '.xhtml', lang='en')
-        newChapter.content = open(path.join(bookDir, chp['name']+'.html'), 'r').read()
+        newChapter.content = open(path.join(bookDir, '{0}.{1}.html'.format(chp['volume'], chp['name'])), 'r').read()
 
         # Add to book
         book.add_item(newChapter)
