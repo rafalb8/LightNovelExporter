@@ -99,6 +99,9 @@ class Actions:
     # Remove novel
     def RemoveBook(self):
         # Get Selected item
+        if len(self.ui.wdgList.selectedItems()) <= 0:
+            return
+
         selected = self.ui.wdgList.selectedItems()[0].text()
         book = path.join(self.settings['BooksDirectory'], selected)
 
