@@ -194,22 +194,25 @@ class Actions:
 
         title = self.info['title'] + ' ' + volume
 
-        # If chapters are not from the same volume
-        if volume == 'Chapters:':
-            numbers = [int(float(''.join(s for s in name if s.isdigit() or s == '.' or s == '-'))) for name in selected]
-            numbers = list(set(numbers))
+        try:
+            # If chapters are not from the same volume
+            if volume == 'Chapters:':
+                numbers = [int(float(''.join(s for s in name if s.isdigit() or s == '.' or s == '-'))) for name in selected]
+                numbers = list(set(numbers))
 
-            # Generate ranges for number list
-            ranges = Utils.ranges(numbers)
+                # Generate ranges for number list
+                ranges = Utils.ranges(numbers)
 
-            for r in ranges:
-                if r[0] == r[1]:
-                    title += ' {0},'.format(r[0])
-                else:
-                    title += ' {0} - {1},'.format(r[0], r[1])
+                for r in ranges:
+                    if r[0] == r[1]:
+                        title += ' {0},'.format(r[0])
+                    else:
+                        title += ' {0} - {1},'.format(r[0], r[1])
 
-            if title[-1] == ',':
-                title = title[:-1]
+                if title[-1] == ',':
+                    title = title[:-1]
+        except ValueError:
+            pass
 
         # Show Title Input Dialog
         dlg = QInputDialog()
