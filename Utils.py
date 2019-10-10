@@ -121,6 +121,7 @@ def getChapterText(url):
         script.decompose()
 
     [x.decompose() for x in text('div', class_='hidden')]
+    [x.decompose() for x in text('div', class_='col-lg-12 text-center')]
 
     # Remove formatting
     for attr in ['class', 'style', 'data-size']:
