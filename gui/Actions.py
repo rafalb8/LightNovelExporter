@@ -162,9 +162,15 @@ class Actions:
 
         # Dump chapters
         for i in range(len(idx)):
+            if progress.wasCanceled():
+                return False
+
             Utils.dumpChapterText(self.info, idx[i], self.settings)
             progress.setValue(i)
             self.app.processEvents()
+
+        # Return status
+        return True
 
     # Download selected chapters
     def DownloadAction(self):
@@ -188,7 +194,13 @@ class Actions:
 
         # Dump not downloaded chapters
         notDumped = [x for x in selected if x[1][-1] != ']']
-        self.downloadChapters(notDumped)
+
+        # Download chapters
+        if not self.downloadChapters(notDumped):
+            self.UpdateList()
+            # If canceled stop epub generation
+            return
+
         self.UpdateList()
 
         # Update selected list
