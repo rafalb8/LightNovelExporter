@@ -233,7 +233,7 @@ class Actions:
         title = dlg.textValue()
 
         # Show File Dialog
-        ans = QFileDialog.getSaveFileName(caption='Save ePUB', filter='ePUB (*.epub)')
+        ans = QFileDialog.getSaveFileName(caption='Save ePUB', filter='ePUB (*.epub)', dir=title+'.epub')
         filename = ans[0]
 
         # Add file format if not present
