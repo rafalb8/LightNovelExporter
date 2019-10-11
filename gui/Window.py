@@ -3,7 +3,7 @@
 # Form implementation generated from reading ui file 'MainWindow.ui',
 # licensing of 'MainWindow.ui' applies.
 #
-# Created: Wed Oct  2 19:11:17 2019
+# Created: Fri Oct 11 11:33:56 2019
 #      by: pyside2-uic  running on PySide2 5.13.1
 #
 # WARNING! All changes made in this file will be lost!
@@ -75,8 +75,8 @@ class Ui_MainWindow(object):
         self.menuNovel.setEnabled(False)
         self.menuNovel.setObjectName("menuNovel")
         MainWindow.setMenuBar(self.menubar)
-        self.actAddBook = QtWidgets.QAction(MainWindow)
-        self.actAddBook.setObjectName("actAddBook")
+        self.actAddBookURL = QtWidgets.QAction(MainWindow)
+        self.actAddBookURL.setObjectName("actAddBookURL")
         self.actDownload = QtWidgets.QAction(MainWindow)
         self.actDownload.setEnabled(True)
         self.actDownload.setObjectName("actDownload")
@@ -85,7 +85,10 @@ class Ui_MainWindow(object):
         self.actRemoveBook = QtWidgets.QAction(MainWindow)
         self.actRemoveBook.setEnabled(True)
         self.actRemoveBook.setObjectName("actRemoveBook")
+        self.actAddBook = QtWidgets.QAction(MainWindow)
+        self.actAddBook.setObjectName("actAddBook")
         self.menuBooks.addAction(self.actAddBook)
+        self.menuBooks.addAction(self.actAddBookURL)
         self.menuBooks.addAction(self.actRemoveBook)
         self.menuNovel.addAction(self.actDownload)
         self.menuNovel.addAction(self.actGenerate)
@@ -101,8 +104,9 @@ class Ui_MainWindow(object):
         self.btnShowList.setText(QtWidgets.QApplication.translate("MainWindow", "Back", None, -1))
         self.menuBooks.setTitle(QtWidgets.QApplication.translate("MainWindow", "Novel List", None, -1))
         self.menuNovel.setTitle(QtWidgets.QApplication.translate("MainWindow", "Novel", None, -1))
-        self.actAddBook.setText(QtWidgets.QApplication.translate("MainWindow", "Add from URL", None, -1))
+        self.actAddBookURL.setText(QtWidgets.QApplication.translate("MainWindow", "Add from URL", None, -1))
         self.actDownload.setText(QtWidgets.QApplication.translate("MainWindow", "Download Chapter/s", None, -1))
         self.actGenerate.setText(QtWidgets.QApplication.translate("MainWindow", "Generate ePUB", None, -1))
         self.actRemoveBook.setText(QtWidgets.QApplication.translate("MainWindow", "Remove Book", None, -1))
+        self.actAddBook.setText(QtWidgets.QApplication.translate("MainWindow", "Add Book", None, -1))
 

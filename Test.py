@@ -17,4 +17,14 @@ import Utils
 # Utils.generateEPUB('test.epub', "Magi's Grandson 1-6", info, chapters)
 
 # print(Utils.loadSettings())
-Utils.defaultSettings()
+#settings = Utils.defaultSettings()
+
+# import cfscrape
+#
+# scraper = cfscrape.create_scraper()
+# x = scraper.post('https://www.readlightnovel.org/search/autocomplete', data='q=kenja',
+#              headers={"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+#                       "X-Requested-With": "XMLHttpRequest"}).content
+
+settings = Utils.loadSettings()
+print(Utils.search('Kenja no', settings))

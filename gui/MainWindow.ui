@@ -177,6 +177,7 @@
      <string>Novel List</string>
     </property>
     <addaction name="actAddBook"/>
+    <addaction name="actAddBookURL"/>
     <addaction name="actRemoveBook"/>
    </widget>
    <widget class="QMenu" name="menuNovel">
@@ -192,7 +193,7 @@
    <addaction name="menuBooks"/>
    <addaction name="menuNovel"/>
   </widget>
-  <action name="actAddBook">
+  <action name="actAddBookURL">
    <property name="text">
     <string>Add from URL</string>
    </property>
@@ -216,6 +217,11 @@
    </property>
    <property name="text">
     <string>Remove Book</string>
+   </property>
+  </action>
+  <action name="actAddBook">
+   <property name="text">
+    <string>Add Book</string>
    </property>
   </action>
  </widget>

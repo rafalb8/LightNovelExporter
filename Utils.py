@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from ebooklib import epub
 from os import makedirs, path
 from unidecode import unidecode
+from cfscrape import create_scraper
 import json
 
 
@@ -34,7 +35,14 @@ def loadSettings():
 
 # Save json with default settings
 def defaultSettings():
-    settings = {'BooksDirectory': 'books', 'MainURL': 'readlightnovel.org'}
+    settings = {'BooksDirectory': 'books',
+                'MainURL': 'readlightnovel.org',
+                'Search': '/search/autocomplete',
+                'SearchHeaders': {
+                    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+                    "X-Requested-With": "XMLHttpRequest"
+                    }
+                }
     saveSettings(settings)
 
 
@@ -45,7 +53,7 @@ def getInfo(url):
     html = BeautifulSoup(body, 'lxml')
 
     # Get Info
-    novel = html.find('div', class_= 'novel')
+    novel = html.find('div', class_='novel')
     title = unidecode(novel.img['alt'])
     img = novel.img['src']
 
@@ -155,6 +163,25 @@ def dumpCover(info, settings):
 
     requests.downloads(info['img'], path.join(bookDir, 'cover.jpg'))
 
+
+def search(title, settings):
+    # Prepare data for request
+    data = 'q={0}'.format(title.replace(' ', '+'))
+    headers = settings['SearchHeaders']
+    url = 'https://www.{0}{1}'.format(settings['MainURL'], settings['Search'])
+    scraper = create_scraper()
+
+    # Send POST Request
+    body = scraper.post(url, data=data, headers=headers).content
+    html = BeautifulSoup(body, 'lxml')
+
+    # Parse html
+    results = []
+    for b in html('li'):
+        book = {'title': unidecode(b.text), 'img': b.img['src'], 'url': b.a['href']}
+        results.append(book)
+
+    return results
 
 # Generate ePUB
 def generateEPUB(filename, title, info, chapters, settings):

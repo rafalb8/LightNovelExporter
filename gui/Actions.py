@@ -1,6 +1,7 @@
 from PySide2.QtGui import QPixmap
 from PySide2.QtWidgets import QInputDialog, QListWidgetItem, QAbstractItemView, QFileDialog, QProgressDialog
 import Utils
+from gui.SearchDialog import SearchDialog
 from gui.Window import Ui_MainWindow
 from os import walk, path
 from shutil import rmtree
@@ -64,6 +65,26 @@ class Actions:
 
     # Add novel to list
     def AddBook(self):
+        dlg = SearchDialog(self.settings)
+        url = dlg.show()
+
+        if url == '':
+            return
+
+        # Dump Info
+        try:
+            info = Utils.dumpInfo(url, self.settings)
+        except AttributeError:
+            print('Incorrect URL')
+            return
+
+        # Dump Cover
+        Utils.dumpCover(info, self.settings)
+
+        self.UpdateList()
+
+    # Add novel to list from URL
+    def AddBookFromURL(self):
         # Create Resized Input Dialog
         dlg = QInputDialog()
         dlg.setInputMode(QInputDialog.TextInput)

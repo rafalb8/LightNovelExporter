@@ -21,6 +21,7 @@ act = Actions(app, ui)
 
 # Menu Book list
 ui.actAddBook.triggered.connect(act.AddBook)
+ui.actAddBookURL.triggered.connect(act.AddBookFromURL)
 ui.actRemoveBook.triggered.connect(act.RemoveBook)
 
 # Menu Chapter list
