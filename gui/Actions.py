@@ -192,6 +192,9 @@ class Actions:
         # Get Selected List
         selected = [item.text().split(' | ') for item in wdgList.selectedItems()]
 
+        if len(selected) <= 0:
+            return
+
         # Dump not downloaded chapters
         notDumped = [x for x in selected if x[1][-1] != ']']
 
