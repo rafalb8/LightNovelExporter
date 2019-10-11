@@ -17,7 +17,7 @@ ui = Ui_MainWindow()
 ui.setupUi(MainWindow)
 
 # Connect actions to signals
-act = Actions(ui)
+act = Actions(app, ui)
 
 # Menu Book list
 ui.actAddBook.triggered.connect(act.AddBook)

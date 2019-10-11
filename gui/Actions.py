@@ -1,10 +1,9 @@
 from PySide2.QtGui import QPixmap
-from PySide2.QtWidgets import QInputDialog, QListWidgetItem, QAbstractItemView, QFileDialog
+from PySide2.QtWidgets import QInputDialog, QListWidgetItem, QAbstractItemView, QFileDialog, QProgressDialog
 import Utils
 from gui.Window import Ui_MainWindow
 from os import walk, path
 from shutil import rmtree
-
 
 class ViewType:
     BOOKVIEW = 0
@@ -12,10 +11,11 @@ class ViewType:
 
 
 class Actions:
-    def __init__(self, ui):
+    def __init__(self, app, ui):
         if not isinstance(ui, Ui_MainWindow):
             raise
 
+        self.app = app
         self.ui = ui
         self.view = ViewType.BOOKVIEW
         self.settings = Utils.loadSettings()
@@ -153,9 +153,24 @@ class Actions:
         # Get indexes from Info dictionary
         idx = [i for i in range(len(chp)) for volume, name in chapters if name == chp[i]['name'] and volume == chp[i]['volume']]
 
+        # Create Progress Dialog
+        progress = QProgressDialog('Downloading Chapters', 'Cancel', 0, len(idx))
+
+        # Show Dialog
+        progress.show()
+        self.app.processEvents()
+
         # Dump chapters
-        for i in idx:
-            Utils.dumpChapterText(self.info, i, self.settings)
+        for i in range(len(idx)):
+            if progress.wasCanceled():
+                return False
+
+            Utils.dumpChapterText(self.info, idx[i], self.settings)
+            progress.setValue(i)
+            self.app.processEvents()
+
+        # Return status
+        return True
 
     # Download selected chapters
     def DownloadAction(self):
@@ -179,7 +194,13 @@ class Actions:
 
         # Dump not downloaded chapters
         notDumped = [x for x in selected if x[1][-1] != ']']
-        self.downloadChapters(notDumped)
+
+        # Download chapters
+        if not self.downloadChapters(notDumped):
+            self.UpdateList()
+            # If canceled stop epub generation
+            return
+
         self.UpdateList()
 
         # Update selected list
