@@ -178,7 +178,7 @@ def search(title, settings):
     # Parse html
     results = []
     for b in html('li'):
-        book = {'title': b.text, 'img': b.img['src'], 'url': b.a['href']}
+        book = {'title': unidecode(b.text), 'img': b.img['src'], 'url': b.a['href']}
         results.append(book)
 
     return results

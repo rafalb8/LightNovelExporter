@@ -65,8 +65,23 @@ class Actions:
 
     # Add novel to list
     def AddBook(self):
-        dlg = SearchDialog()
-        dlg.show()
+        dlg = SearchDialog(self.settings)
+        url = dlg.show()
+
+        if url == '':
+            return
+
+        # Dump Info
+        try:
+            info = Utils.dumpInfo(url, self.settings)
+        except AttributeError:
+            print('Incorrect URL')
+            return
+
+        # Dump Cover
+        Utils.dumpCover(info, self.settings)
+
+        self.UpdateList()
 
     # Add novel to list from URL
     def AddBookFromURL(self):
