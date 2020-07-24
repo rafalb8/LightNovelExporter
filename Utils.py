@@ -41,7 +41,7 @@ def defaultSettings():
                 'SearchHeaders': {
                     "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
                     "X-Requested-With": "XMLHttpRequest"
-                    }
+                }
                 }
     saveSettings(settings)
 
@@ -182,6 +182,7 @@ def search(title, settings):
         results.append(book)
 
     return results
+
 
 # Generate ePUB
 def generateEPUB(filename, title, info, chapters, settings):

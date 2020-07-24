@@ -61,6 +61,9 @@ class SearchDialog(QDialog):
             self.ui.listResults.addItem(book['title'])
 
     def actListSelect(self, item):
+        if item is None:
+            return
+
         # Get Image
         url = [b['img'] for b in self.results if b['title'] == item.text()][0]
 
