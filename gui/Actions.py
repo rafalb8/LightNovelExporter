@@ -94,7 +94,7 @@ class Actions:
         dlg.resize(500, 100)
 
         # If Cancelled
-        if dlg.exec_() is 0:
+        if dlg.exec_() == 0:
             return
 
         # Get URL
@@ -198,7 +198,7 @@ class Actions:
         wdgList = self.ui.wdgList
 
         # Get Selected List
-        selected = [item.text().split(' | ') for item in wdgList.selectedItems() if item.text().split(' | ')[1][-1] is not ']']
+        selected = [item.text().split(' | ') for item in wdgList.selectedItems() if item.text().split(' | ')[1][-1] != ']']
 
         # Download chapters
         self.downloadChapters(selected)
@@ -271,7 +271,7 @@ class Actions:
         dlg.resize(500, 100)
 
         # If Cancelled
-        if dlg.exec_() is 0:
+        if dlg.exec_() == 0:
             return
 
         # Get URL

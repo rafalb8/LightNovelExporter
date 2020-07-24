@@ -12,7 +12,7 @@ class SearchDialog(QDialog):
         super().__init__()
 
         # Dialog UI
-        self.ui = SearchUI.Ui_Dialog()
+        self.ui = SearchUI.Ui_SearchUI()
         self.ui.setupUi(self)
 
         # Dialog Variables
@@ -34,7 +34,7 @@ class SearchDialog(QDialog):
 
     # Show Dialog
     def show(self):
-        if self.exec_() is 0:
+        if self.exec_() == 0:
             return ''
 
         # Return URL
